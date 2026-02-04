@@ -14,9 +14,10 @@ logger = logging.getLogger(__name__)
 def main():
     logging.basicConfig(level=20)
     load_dotenv()
+    token = getenv("SUPERJOB_SECRET_KEY")
     start_tick = tick()
     superjob_key_presence = False
-    if getenv("SUPERJOB_SECRET_KEY"):
+    if token:
         superjob_key_presence = True
     else:
         logger.warning(
@@ -26,7 +27,7 @@ def main():
     headhunter_salaries = headhunter.get_stats(get_hh_vacancies())
     if superjob_key_presence:
         logger.info("Getting salaries... [2/2 - SuperJob]")
-        superjob_salaries = superjob.get_stats(get_sj_vacancies())
+        superjob_salaries = superjob.get_stats(get_sj_vacancies(token=token))
     logger.info("Making tables...")
     headhunter_table_instance = tables.get_table(
         "HeadHunter", tables.format_data(headhunter_salaries)
