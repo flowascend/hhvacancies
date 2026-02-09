@@ -12,7 +12,7 @@ def get_stats(different_languages_vacancies: dict) -> dict:
         logger.info(f"Parsing vacancies for {language}.")
         salaries = []
         for vacancy in vacancies[1]:
-            if (vacancy["currency"]) and (vacancy["from"]) and (vacancy["to"]):
+            if vacancy["currency"] and (vacancy["from"] or vacancy["to"]):
                 salary = predict_rub_salary(
                     currency=vacancy["currency"],
                     salary_from=vacancy["payment_from"],

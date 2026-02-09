@@ -15,11 +15,7 @@ def get_stats(different_languages_vacancies: dict) -> dict:
         salaries = []
         for vacancy in vacancies[1]:
             salary_data = vacancy["salary"]
-            if (
-                salary_data["currency"]
-                and (salary_data["from"])
-                and (salary_data["to"])
-            ):
+            if salary_data["currency"] and (salary_data["from"] or salary_data["to"]):
                 salary = predict_rub_salary(
                     currency=salary_data["currency"],
                     salary_from=salary_data["from"],
