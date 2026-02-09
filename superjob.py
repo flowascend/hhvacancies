@@ -8,10 +8,12 @@ logger = logging.getLogger(__name__)
 
 def get_stats(different_languages_vacancies: dict) -> dict:
     languages_salaries = {}
-    for language, vacancies in different_languages_vacancies.items():
+    for language, response in different_languages_vacancies.items():
         logger.info(f"Parsing vacancies for {language}.")
+        vacancies = response[0]
+        total = response[1]
         salaries = []
-        for vacancy in vacancies[1]:
+        for vacancy in vacancies:
             if vacancy["currency"] and (vacancy["from"] or vacancy["to"]):
                 salary = predict_rub_salary(
                     currency=vacancy["currency"],
@@ -24,7 +26,7 @@ def get_stats(different_languages_vacancies: dict) -> dict:
         else:
             avg_salary = None
         languages_salaries[language] = {
-            "found_vacancies": vacancies[1],
+            "found_vacancies": vacancies,
             "processed_vacancies": len(salaries),
             "average_salary": avg_salary,
         }
