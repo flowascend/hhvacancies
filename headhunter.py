@@ -13,12 +13,10 @@ def get_stats(different_languages_vacancies: dict) -> dict:
     for language, vacancies in different_languages_vacancies.items():
         logger.info(f"Parsing vacancies for {language}.")
         salaries = []
-        pprint(vacancies)
-        pprint(vacancies[1])
         for vacancy in vacancies[1]:
             salary_data = vacancy["salary"]
             if (
-                (salary_data["currency"])
+                salary_data["currency"]
                 and (salary_data["from"])
                 and (salary_data["to"])
             ):
