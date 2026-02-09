@@ -8,12 +8,12 @@ def format_stats(stats: dict[dict]):
     formatted_stats = [
         ("Language", "Found Vacancies", "Processed Vacancies", "Average Salary")
     ]
-    for k, v in stats.items():
+    for key, value in stats.items():
         formatted_stats.append((
-            k,
-            v["found_vacancies"],
-            v["processed_vacancies"],
-            v["average_salary"],
+            key,
+            value["found_vacancies"],
+            value["processed_vacancies"],
+            value["average_salary"],
         ))
     return tuple(formatted_stats)
 
