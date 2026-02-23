@@ -31,7 +31,7 @@ def get_vacancies(
         page_payload = page_response.json()
 
         total = page_payload["found"]
-        items.append(page_payload["items"])
+        items.extend(page_payload["items"])
 
         if page >= page_payload["pages"] - 1:
             logger.log(
@@ -47,7 +47,7 @@ def get_vacancies(
             15,
             f"[get_vacancies_items] Got page {page} payload. Time taken: {round((tick() - start_tick), 2)}s.",
         )
-    return (total, items)
+    return total, items
 
 
 def get_different_languages_vacancies(period: int = 30, area_id: str = "1") -> dict:
@@ -56,8 +56,8 @@ def get_different_languages_vacancies(period: int = 30, area_id: str = "1") -> d
     for language in top_languages:
         logger.info(f"Parsing vacancies for {language}.")
         search_field = f"Программист {language}"
-        language_vacancies = get_vacancies(
+        language_count, language_vacancies = get_vacancies(
             search_field=search_field, period=period, area_id=area_id
         )
-        different_languages_vacancies[language] = language_vacancies
+        different_languages_vacancies[language] = (language_count, language_vacancies)
     return different_languages_vacancies

@@ -24,7 +24,9 @@ def main():
             "SuperJob secret key not present! Skipping all SuperJob related calls."
         )
     logger.info("Getting salaries... [1/2 - HeadHunter]")
-    headhunter_salaries = headhunter.get_stats(get_hh_vacancies())
+    hh_vacancies = get_hh_vacancies()
+    print(hh_vacancies)
+    headhunter_salaries = headhunter.get_stats(hh_vacancies)
     if superjob_key_presence:
         logger.info("Getting salaries... [2/2 - SuperJob]")
         superjob_salaries = superjob.get_stats(get_sj_vacancies(token=token))

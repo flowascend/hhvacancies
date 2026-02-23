@@ -1,22 +1,24 @@
 import logging
 from commons import predict_rub_salary
-from hhapi import get_different_languages_vacancies
 from time import time as tick
 from itertools import count
-from pprint import pprint
 
 logger = logging.getLogger(__name__)
 
 
-def get_stats(different_languages_vacancies: dict) -> dict:
+def get_stats(different_languages_vacancies) -> dict:
+    print(different_languages_vacancies)
     languages_salaries = {}
     for language, response in different_languages_vacancies.items():
         logger.info(f"Parsing vacancies for {language}.")
-        total = response[1]
-        vacancies = response[0]
+        total = response[0]
+        vacancies = response[1]
         salaries = []
         for vacancy in vacancies:
-            salary_data = vacancy["salary"]
+            if vacancy["salary"]:
+                salary_data = vacancy["salary"]
+            else:
+                continue
             if salary_data["currency"] and (salary_data["from"] or salary_data["to"]):
                 salary = predict_rub_salary(
                     currency=salary_data["currency"],

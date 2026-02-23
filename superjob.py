@@ -6,12 +6,12 @@ from pprint import pprint
 logger = logging.getLogger(__name__)
 
 
-def get_stats(different_languages_vacancies: dict) -> dict:
+def get_stats(different_languages_vacancies) -> dict:
     languages_salaries = {}
     for language, response in different_languages_vacancies.items():
         logger.info(f"Parsing vacancies for {language}.")
-        vacancies = response[0]
-        total = response[1]
+        vacancies = response[1]
+        total = response[0]
         salaries = []
         for vacancy in vacancies:
             if vacancy["currency"] and (vacancy["from"] or vacancy["to"]):
@@ -26,7 +26,7 @@ def get_stats(different_languages_vacancies: dict) -> dict:
         else:
             avg_salary = None
         languages_salaries[language] = {
-            "found_vacancies": vacancies,
+            "found_vacancies": total,
             "processed_vacancies": len(salaries),
             "average_salary": avg_salary,
         }
