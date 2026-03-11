@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 from time import time as tick
 from time import sleep as wait
 from itertools import count
-from pprint import pprint
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +43,7 @@ def get_vacancies(
         total = page_payload["total"]
         objects.append(page_payload["objects"])
 
-        if page >= int(page_payload["total"] / 20) - 1:
+        if not bool(page_payload["more"]):
             logger.log(
                 15,
                 f"[get_vacancies_items] Last page parsed! Breaking. Time taken: {round((tick() - start_tick), 2)}s.",
@@ -58,7 +57,7 @@ def get_vacancies(
             15,
             f"[get_vacancies_items] Got page {page} payload. Time taken: {round((tick() - start_tick), 2)}s.",
         )
-    return (total, objects)
+    return total, objects
 
 
 def get_different_languages_vacancies(
