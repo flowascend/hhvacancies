@@ -1,7 +1,5 @@
 import logging
 from commons import predict_rub_salary
-from sjapi import get_different_languages_vacancies
-from pprint import pprint
 
 logger = logging.getLogger(__name__)
 

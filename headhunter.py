@@ -6,13 +6,12 @@ from itertools import count
 logger = logging.getLogger(__name__)
 
 
-def get_stats(different_languages_vacancies) -> dict:
-    print(different_languages_vacancies)
+def get_stats(different_languages_vacancies: dict) -> dict:
     languages_salaries = {}
-    for language, response in different_languages_vacancies.items():
+    for language, data in different_languages_vacancies.items():
         logger.info(f"Parsing vacancies for {language}.")
-        total = response[0]
-        vacancies = response[1]
+        total = data[0]
+        vacancies = data[1]
         salaries = []
         for vacancy in vacancies:
             if vacancy["salary"]:
