@@ -5,7 +5,6 @@ from os import getenv
 from time import sleep as wait
 from time import time as tick
 from itertools import count
-from pprint import pprint
 
 logger = logging.getLogger(__name__)
 
@@ -15,7 +14,7 @@ def get_vacancies(
 ):
     total_start_tick = tick()
     total = 0
-    items = []
+    vacancies = []
     for page in count(0):
         logger.log(
             15,
@@ -31,7 +30,7 @@ def get_vacancies(
         page_payload = page_response.json()
 
         total = page_payload["found"]
-        items.extend(page_payload["items"])
+        vacancies.extend(page_payload["items"])
 
         if page >= page_payload["pages"] - 1:
             logger.log(
@@ -47,7 +46,7 @@ def get_vacancies(
             15,
             f"[get_vacancies_items] Got page {page} payload. Time taken: {round((tick() - start_tick), 2)}s.",
         )
-    return total, items
+    return total, vacancies
 
 
 def get_different_languages_vacancies(period: int = 30, area_id: str = "1") -> dict:

@@ -25,7 +25,6 @@ def main():
         )
     logger.info("Getting salaries... [1/2 - HeadHunter]")
     hh_vacancies = get_hh_vacancies()
-    print(hh_vacancies)
     headhunter_salaries = headhunter.get_stats(hh_vacancies)
     if superjob_key_presence:
         logger.info("Getting salaries... [2/2 - SuperJob]")
