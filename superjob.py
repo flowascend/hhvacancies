@@ -8,8 +8,7 @@ def get_stats(different_languages_vacancies) -> dict:
     languages_salaries = {}
     for language, language_payload in different_languages_vacancies.items():
         logger.info(f"Parsing vacancies for {language}.")
-        vacancies = language_payload[1]
-        total = language_payload[0]
+        total, vacancies = language_payload
         salaries = []
         for vacancy in vacancies:
             if not vacancy["currency"] and not (vacancy["from"] or vacancy["to"]):
