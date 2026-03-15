@@ -14,17 +14,17 @@ def get_stats(different_languages_vacancies: dict) -> dict:
         vacancies = language_payload[1]
         salaries = []
         for vacancy in vacancies:
-            if vacancy["salary"]:
-                salary_data = vacancy["salary"]
-            else:
+            if not vacancy["salary"]:
                 continue
-            if salary_data["currency"] and (salary_data["from"] or salary_data["to"]):
-                salary = predict_rub_salary(
-                    currency=salary_data["currency"],
-                    salary_from=salary_data["from"],
-                    salary_to=salary_data["to"],
-                )
-                salaries.append(salary)
+            salary_data = vacancy["salary"]
+            if not salary_data["currency"] and not (salary_data["from"] or salary_data["to"]):
+                continue
+            salary = predict_rub_salary(
+                currency=salary_data["currency"],
+                salary_from=salary_data["from"],
+                salary_to=salary_data["to"],
+            )
+            salaries.append(salary)
         if salaries:
             avg_salary = int(sum(salaries) / len(salaries))
         else:
