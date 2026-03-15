@@ -6,10 +6,10 @@ logger = logging.getLogger(__name__)
 
 def get_stats(different_languages_vacancies) -> dict:
     languages_salaries = {}
-    for language, response in different_languages_vacancies.items():
+    for language, language_payload in different_languages_vacancies.items():
         logger.info(f"Parsing vacancies for {language}.")
-        vacancies = response[1]
-        total = response[0]
+        vacancies = language_payload[1]
+        total = language_payload[0]
         salaries = []
         for vacancy in vacancies:
             if vacancy["currency"] and (vacancy["from"] or vacancy["to"]):
